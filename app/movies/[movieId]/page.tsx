@@ -11,12 +11,15 @@ export default async function MovieDetailsPage({ params }: Props) {
     `https://omdbapi.com?apikey=${process.env.OMDB_API_KEY}&i=${movieId}`
   )
   const movie = await res.json()
-  const myError = new Error(
-    '영화 상세 정보를 가져오다가 알 수 없는 문제가 발생했습니다. 나중에 다시 시도해 보세요!'
-  )
-  console.log(myError.message)
 
-  throw myError
+  // --- ❌ 에러 발생 예시 ---
+  // const myError = new Error(
+  //   '영화 상세 정보를 가져오다가 알 수 없는 문제가 발생했습니다. 나중에 다시 시도해 보세요!'
+  // )
+  // console.log(myError.message)
+  // throw myError
+
+  // --- ✅ 정상 처리 예시 ---
   return (
     <>
       <h1>{movie.Title}</h1>
