@@ -9,7 +9,7 @@ export async function fetchMovies(searchText: string) {
   return (data.Search || []) as MovieSimples[]
 }
 
-export async function fetchMovie(movieId: string, plot: 'full' | 'short') {
+export async function fetchMovie(movieId: string, plot: MovieDetails['Plot']) {
   // await new Promise(resolve => setTimeout(resolve, 2000))
   const res = await fetch(
     `https://omdbapi.com?apikey=${process.env.OMDB_API_KEY}&i=${movieId}&plot=${plot}`

@@ -5,7 +5,7 @@ import { fetchMovie } from '@/serverActions'
 import type { MovieDetails } from '@/types/movie'
 
 interface SP {
-  plot?: 'full' | 'short'
+  plot?: MovieDetails['Plot']
 }
 interface Props {
   params: Promise<{

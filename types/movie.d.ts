@@ -6,6 +6,6 @@ export interface MovieSimples {
 export interface MovieDetails {
   imdbID: string
   Title: string
-  Plot: string
+  Plot: 'full' | 'short'
   Poster: string
 }
