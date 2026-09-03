@@ -1,0 +1,17 @@
+// http://localhost:3000/api/movies/tt6320628
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+interface Context {
+  params: Promise<{ movieId: string }>
+}
+
+export async function GET(request: NextRequest, context: Context) {
+  const { movieId } = await context.params
+  // 영화 상세 검색!
+  const res = await fetch(
+    `https://omdbapi.com?apikey=${process.env.OMDB_API_KEY}&i=${movieId}`
+  )
+  const movie = await res.json()
+  return NextResponse.json(movie)
+}
