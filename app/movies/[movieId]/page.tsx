@@ -1,14 +1,24 @@
+import Image from 'next/image'
+
 interface Props {
   params: Promise<{
     movieId: string
   }>
+  searchParams: Promise<{
+    plot?: 'full' | 'short'
+  }>
 }
 
-export default async function MovieDetailsPage({ params }: Props) {
+// http://localhost:3000/movies/tt1234567890?plot=full
+export default async function MovieDetailsPage({
+  params,
+  searchParams
+}: Props) {
   const { movieId } = await params
+  const { plot = 'hello' } = await searchParams
   await new Promise(resolve => setTimeout(resolve, 2000))
   const res = await fetch(
-    `https://omdbapi.com?apikey=${process.env.OMDB_API_KEY}&i=${movieId}`
+    `https://omdbapi.com?apikey=${process.env.OMDB_API_KEY}&i=${movieId}&plot=${plot}`
   )
   const movie = await res.json()
 
@@ -22,8 +32,15 @@ export default async function MovieDetailsPage({ params }: Props) {
   // --- ✅ 정상 처리 예시 ---
   return (
     <>
-      <h1>{movie.Title}</h1>
+      <h1 onClick={() => console.log('clicked!')}>{movie.Title}</h1>
       <p>{movie.Plot}</p>
+      {/* <img src="" alt="" /> */}
+      <Image
+        src={movie.Poster}
+        alt={movie.Title}
+        width={600}
+        height={900}
+      />
     </>
   )
 }
