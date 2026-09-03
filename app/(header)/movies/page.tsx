@@ -1,11 +1,11 @@
 'use client'
 import { useState } from 'react'
 import { fetchMovies } from '@/serverActions'
-import type { Movie } from '@/serverActions'
+import type { MovieSimples } from '@/types/movie'
 import Link from 'next/link'
 
 export default function MoviesPage() {
-  const [movies, setMovies] = useState<Movie[]>([])
+  const [movies, setMovies] = useState<MovieSimples[]>([])
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()

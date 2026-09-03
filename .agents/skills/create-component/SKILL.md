@@ -23,3 +23,48 @@ export default function 컴포넌트이름() {
   return <></>
 }
 ```
+
+## 라우팅 파일 생성
+
+아래의 라우팅 파일을 생성하는 경우, 임의로 수정하지 말고 있는 그대로 템플릿 생성할 것!
+
+`layout.tsx`:
+
+```tsx
+interface Props {
+  children: React.ReactNode
+}
+
+export default async function Layout({ children }: Props) {
+  return <>{children}</>
+}
+```
+
+`loading.tsx`:
+
+```tsx
+import Loader from '@/components/Loader'
+
+export default async function Loading() {
+  return (
+    <Loader
+      size={100}
+      className="fixed"
+    />
+  )
+}
+```
+
+`error.tsx`:
+
+```tsx
+'use client'
+
+interface Props {
+  error: Error
+}
+
+export default function Error({ error }: Props) {
+  return <>{error.message}</>
+}
+```
