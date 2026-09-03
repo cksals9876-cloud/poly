@@ -1,7 +1,9 @@
 'use client'
+// import type { Movie } from './page'
+import type { MovieDetails } from '@/types/movie'
 
 interface Props {
-  movie: Movie
+  movie: MovieDetails
 }
 
 export default function Title({ movie }: Props) {

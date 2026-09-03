@@ -1,26 +1,31 @@
+'use client'
 import Image from 'next/image'
+import { use, useEffect, useState } from 'react'
+import { fetchMovie } from '@/serverActions'
+import type { MovieDetails } from '@/types/movie'
 
+interface SP {
+  plot?: 'full' | 'short'
+}
 interface Props {
   params: Promise<{
     movieId: string
   }>
-  searchParams: Promise<{
-    plot?: 'full' | 'short'
-  }>
+  searchParams: Promise<SP>
 }
 
 // http://localhost:3000/movies/tt1234567890?plot=full
-export default async function MovieDetailsPage({
-  params,
-  searchParams
-}: Props) {
-  const { movieId } = await params
-  const { plot = 'hello' } = await searchParams
-  await new Promise(resolve => setTimeout(resolve, 2000))
-  const res = await fetch(
-    `https://omdbapi.com?apikey=${process.env.OMDB_API_KEY}&i=${movieId}&plot=${plot}`
-  )
-  const movie = await res.json()
+export default function MovieDetailsPage({ params, searchParams }: Props) {
+  const { movieId } = use(params)
+  const { plot = 'short' }: SP = use(searchParams)
+  const [movie, setMovie] = useState<MovieDetails | null>(null)
+
+  useEffect(() => {
+    // const movie = await fetchMovie()
+    // setMovie(movie)
+    // fetchMovie().then(movie => setMovie(movie))
+    fetchMovie(movieId, plot).then(setMovie)
+  }, [])
 
   // --- ❌ 에러 발생 예시 ---
   // const myError = new Error(
@@ -32,15 +37,19 @@ export default async function MovieDetailsPage({
   // --- ✅ 정상 처리 예시 ---
   return (
     <>
-      <h1 onClick={() => console.log('clicked!')}>{movie.Title}</h1>
-      <p>{movie.Plot}</p>
-      {/* <img src="" alt="" /> */}
-      <Image
-        src={movie.Poster}
-        alt={movie.Title}
-        width={600}
-        height={900}
-      />
+      {movie && (
+        <>
+          <h1 onClick={() => console.log('clicked!')}>{movie.Title}</h1>
+          <p>{movie.Plot}</p>
+          {/* <img src="" alt="" /> */}
+          <Image
+            src={movie.Poster}
+            alt={movie.Title}
+            width={600}
+            height={900}
+          />
+        </>
+      )}
     </>
   )
 }
