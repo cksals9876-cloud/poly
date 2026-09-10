@@ -7,7 +7,9 @@ interface Context {
 }
 
 export async function GET(request: NextRequest, context: Context) {
+  const {searchParams} = request.nextUrl
   const { movieId } = await context.params
+  const plot = searchParams.get('plot') || ''
   // 영화 상세 검색!
   const res = await fetch(
     `https://omdbapi.com?apikey=${process.env.OMDB_API_KEY}&i=${movieId}`

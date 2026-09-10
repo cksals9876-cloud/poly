@@ -1,6 +1,5 @@
-import Image from 'next/image'
-import Title from './Title'
 import type { MovieDetails as Movie } from '@/types/movie'
+import Render from './Render'
 
 interface SP {
   plot?: Movie['Plot']
@@ -22,7 +21,7 @@ export default async function MovieDetailsPage({
   // await new Promise(resolve => setTimeout(resolve, 2000))
   const res = await fetch(
     // `https://omdbapi.com?apikey=${process.env.OMDB_API_KEY}&i=${movieId}&plot=${plot}`
-    `http://localhost:3000/api/movies/${movieId}?plot=${plot}`
+    `${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/movies/${movieId}?plot=${plot}`
   )
   const movie: Movie = await res.json()
 
@@ -36,15 +35,7 @@ export default async function MovieDetailsPage({
   // --- ✅ 정상 처리 예시 ---
   return (
     <>
-      <Title movie={movie} />
-      <p>{movie.Plot}</p>
-      {/* <img src="" alt="" /> */}
-      <Image
-        src={movie.Poster}
-        alt={movie.Title}
-        width={600}
-        height={900}
-      />
+      <Render movie={movie} />
     </>
   )
 }
