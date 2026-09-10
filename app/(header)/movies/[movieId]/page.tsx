@@ -21,7 +21,7 @@ export default async function MovieDetailsPage({
   // await new Promise(resolve => setTimeout(resolve, 2000))
   const res = await fetch(
     // `https://omdbapi.com?apikey=${process.env.OMDB_API_KEY}&i=${movieId}&plot=${plot}`
-    `${process.env.NEXT_PUBLIC_URL}:${process.env.PORT}/api/movies/${movieId}?plot=${plot}`
+    `${process.env.NEXT_PUBLIC_URL}/api/movies/${movieId}?plot=${plot}`
   )
   const movie: Movie = await res.json()
 
