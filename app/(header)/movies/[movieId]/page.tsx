@@ -30,6 +30,7 @@ export async function generateMetadata({ params, searchParams }: Props) {
   const movie = await fetchMovie(movieId, plot)
 
   return {
+    title: movie.Title,
     openGraph: {
       type: 'website',
       siteName: 'Next.js 연습 프로젝트',
